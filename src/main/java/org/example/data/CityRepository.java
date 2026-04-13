@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import org.example.exception.CityLoadingException;
 
 public class CityRepository {
 
@@ -27,7 +28,7 @@ public class CityRepository {
                 .getClassLoader()
                 .getResourceAsStream("UkraineCities.txt");
         if (inputS == null) {
-            throw new IllegalStateException("File 'UkraineCities.txt' not found");
+            throw new CityLoadingException("File 'UkraineCities.txt' not found");
         }
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputS))) {
@@ -45,7 +46,7 @@ public class CityRepository {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("Loading Exception", e);
+            throw new CityLoadingException("Error while reading UkraineCities.txt", e);
         }
     }
 

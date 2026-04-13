@@ -47,14 +47,14 @@ public class GameService {
             return new MoveResult(true, "", city, null);
         }
         LetterResult letterResult = resolver.resolveNextLetter(state.getLastCity(), usedCities);
-        Character expected = letterResult.getLetter();
+        Character expected = letterResult.letter();
 
         if (city.charAt(0) != expected) {
             return new MoveResult(false, "Невірна літера", null, expected);
         }
 
         savePlayerMove(city);
-        return new MoveResult(true, letterResult.getMessage(), city, expected);
+        return new MoveResult(true, letterResult.message(), city, expected);
 
     }
 
@@ -75,8 +75,8 @@ public class GameService {
     public MoveResult computerMove() {
 
         LetterResult letterResult = resolver.resolveNextLetter(state.getLastCity(), usedCities);
-        Character letter = letterResult.getLetter();
-        String message = letterResult.getMessage();
+        Character letter = letterResult.letter();
+        String message = letterResult.message();
         String city = repository.getRandomCity(letter, usedCities);
 
         if (city == null) {
@@ -86,7 +86,7 @@ public class GameService {
         saveCompMove(city);
         LetterResult next = resolver.resolveNextLetter(city, usedCities);
 
-        return new MoveResult(true, message, city, next.getLetter());
+        return new MoveResult(true, message, city, next.letter());
     }
 
     public boolean isGameOver() {

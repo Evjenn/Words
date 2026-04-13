@@ -102,33 +102,33 @@ public class GamePanel extends JPanel {
 
     private void makeMove() {
         MoveResult player = game.playerMove(input.getText());
-        if (!player.isValid()) {
-            status.setText(player.getMessage());
+        if (!player.valid()) {
+            status.setText(player.message());
             return;
         }
-        history.append("Ви: " + WordsFormatter.format(player.getCity()) + "\n");
+        history.append("Ви: " + WordsFormatter.format(player.city()) + "\n");
         if (game.isGameOver()) {
             finish();
             return;
         }
         MoveResult comp = game.computerMove();
-        if (comp.getCity() != null) {
-            history.append("Комп'ютер: " + WordsFormatter.format(comp.getCity()) + "\n");
-            computerLabel.setText("Комп'ютер: " + WordsFormatter.format(comp.getCity()));
+        if (comp.city() != null) {
+            history.append("Комп'ютер: " + WordsFormatter.format(comp.city()) + "\n");
+            computerLabel.setText("Комп'ютер: " + WordsFormatter.format(comp.city()));
         }
-        if (!comp.isValid()) {
+        if (!comp.valid()) {
             finish();
             return;
         }
         input.setText("");
-        String msg = comp.getMessage();
+        String msg = comp.message();
         if (msg != null && !msg.isBlank()) {
             status.setText("<html>"
                     + msg.replace("\n", "<br>")
-                    + "Наступна літера: " + comp.getNextLetter()
+                    + "Наступна літера: " + comp.nextLetter()
                     + "</html>");
         } else {
-            status.setText("Наступна літера: " + comp.getNextLetter());
+            status.setText("Наступна літера: " + comp.nextLetter());
         }
         updateMovesLabel();
         history.setCaretPosition(history.getDocument().getLength());
